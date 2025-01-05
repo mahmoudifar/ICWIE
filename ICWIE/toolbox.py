@@ -260,7 +260,7 @@ def spdc(psi, p1, s1, i1, state='fock'):
             terms[idx] = output_state
 
     # Reconstruct the dictionary with new terms
-    psi_out= dict(zip(terms, list(collected_terms.values())))
+    psi_out = dict(zip(terms, list(collected_terms.values())))
     
     # Combine terms into a single expression
     transformed_state = sp.expand(sp.Add(*[mode1 * mode2 for mode1, mode2 in psi_out.items()]))
@@ -277,7 +277,7 @@ def pathidentity(psi, i1, i2, phi_i=0):
     Parameters:
         psi: sympy.Expr
             Symbolic expression representing the quantum state.
-        i1, i2 : sympy.IndexedBase
+        i1, i2: sympy.IndexedBase
             Path of idler photons.
         phi_i: float, optional
             The phase change is due to propagation from crystal NL1 to crystal NL2 (default is 0).
