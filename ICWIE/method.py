@@ -167,7 +167,7 @@ def rate_fun(psi, p1, p2, task, labels = labels):
 
    
 def visibility(r_min, r_max):
-    vis =(r_max - r_min)/((r_max + r_min))
+    vis = (r_max - r_min) / (r_max + r_min)
     return vis
 
 def replace(psi, t):
@@ -203,7 +203,7 @@ def to_normalaze(psi, labels = labels):
 
 def normalize_fun(psi, alpha, g):
     """
-    Normalizes each term in a given expression based on product of `alpha` and `g'.
+    Normalizes each term in a given expression based on the product of `alpha` and `g'.
     
     Parameters:
         psi: The expression to normalize.
