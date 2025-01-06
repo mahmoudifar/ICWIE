@@ -23,12 +23,15 @@ def annihilation_fun(psi, a, state='fock'):
     Applies the annihilation operator to the given state.
 
     Parameters:
-        psi (sympy.Expr): The state representation.
-        a (sympy.Symbol): The path of the photon.
-        state (str): The type of state, either 'fock' or 'coherent state'.
+        psi: sympy expression
+            The state representation.
+        a: spmpy.IndexedBase
+            The path of the photon.
+        state: str
+            The type of state is either 'fock' or 'coherent state'.
 
     Returns:
-        sympy.Expr: The updated state after applying the annihilation operator.
+        sympy expression: The updated state after applying the annihilation operator.
         
     Raises:
         ValueError: If the `state` parameter is not a recognized type.
@@ -49,13 +52,17 @@ def creation_fun(psi, a, state='fock', n_cutoff = None):
     Applies the creation operator to a quantum state.
 
     Parameters:
-        psi (Expr): The symbolic quantum state representation.
-        a (Symbol): TThe path of the photon.
-        state (str): The type of quantum state, either 'fock' or 'coherent'. Defaults to 'fock'.
-        n_cutoff (int, optional): The truncation point for coherent state expansion. Required for the 'coherent' state.
+        psi: sympy expression
+            The symbolic quantum state representation.
+        a: sympy.IndexedBase
+            The path of the photon.
+        state: str
+            The type of quantum state is either 'fock' or 'coherent'. Defaults to 'fock'.
+        n_cutoff: int, optional
+            The truncation point for coherent state expansion. Required for the 'coherent' state.
 
     Returns:
-        Expr: The updated state after applying the creation operator.
+        sympy expression: The updated state after applying the creation operator.
 
     Raises:
         ValueError: If `state` is invalid or `n_cutoff` is missing for a 'coherent' state.
@@ -87,7 +94,9 @@ def coherent_state(psi, a, n_cutoff):
     Calculate the coherent state.
 
     Parameters:
-    alpha: sympy.Symbol or numeric
+    psi: sympy expression
+        The symbolic quantum state representation.
+    n: sympy.Symbol 
         The coherent state parameter.
     a: sympy.IndexedBase
         The indexed base for the number (Fock) states.
@@ -95,7 +104,7 @@ def coherent_state(psi, a, n_cutoff):
         The maximum value of n for summation.
 
     Returns:
-    sympy.Expr
+    sympy expression
         The coherent state is a symbolic expression.
     """
     psi = psi.replace(a[n], sp.exp(-abs(n**2) / 2) *
@@ -114,9 +123,9 @@ def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0 = 0):
     Simulates the action of a beamsplitter on a quantum state.
 
     Parameters:
-        state: sympy expression
+        psi: sympy expression
             The input quantum state.
-        p1, p2: sympy symbols
+        p1, p2: sympy.IndexedBase
             Mode creation operators.
         r: float or sympy symbol, optional
             Reflectivity of the beamsplitter (default is 1/sqrt(2)).
@@ -189,7 +198,7 @@ def phase_shifter(psi, p, phi, state='fock'):
     Parameters:
         psi: sympy expression
             The input quantum state.
-        p: sympy symbol
+        p: sympy.IndexedBase
             The photon path or mode.
         phi: float or sympy symbol
             The phase shift to apply.
@@ -225,12 +234,16 @@ def spdc(psi, p1, s1, i1, state='fock'):
     Simulate a Spontaneous Parametric Down-Conversion (SPDC) process.
 
     Parameters:
-    psi (sympy expression): The initial state.
-    p1, s1, i1 (list): Lists of paths for pump, signal, and idler modes respectively.
-    state (str): The state type, either 'fock' or 'coherent'.
+    psi: sympy expression 
+        The initial state.
+    p1, s1, i1: sympy.IndexedBase
+        Lists of paths for pump, signal, and idler modes respectively.
+    state: str
+        The state type is either 'fock' or 'coherent'.
 
     Returns:
-    sympy expression: The final state after SPDC process.
+    sympy expression: 
+        The final state after SPDC process.
     """
     m, l = 0, 0  # Assuming these are the number of photons for the s1, i1 for the initial state
 
@@ -275,15 +288,16 @@ def pathidentity(psi, i1, i2, phi_i=0):
     i1[n] * i2[m] -> sqrt(binomial(n + m, n)) * i1[0] * i2[n + m] * exp(I * m * phi_i)
 
     Parameters:
-        psi: sympy.Expr
+        psi: sympy expression
             Symbolic expression representing the quantum state.
         i1, i2: sympy.IndexedBase
             Path of idler photons.
-        phi_i: float, optional
+        phi_i: float or sympy symbol, optional
             The phase change is due to propagation from crystal NL1 to crystal NL2 (default is 0).
 
     Returns:
-        sympy.Expr: A symbolic expression of the final state after transformations.
+        sympy expression: 
+            A symbolic expression of the final state after transformations.
     """
 
     # Collect terms grouped by products of i1[n] and i2[m]
