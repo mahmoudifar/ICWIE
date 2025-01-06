@@ -129,7 +129,7 @@ def rate_fun(psi, p1, p2, task, labels = labels):
         task: The task to perform. Options are 'coincidence', 'photon_counting', or 'joint_probability'.
 
     Returns:
-        The computed rate or 0 if the resulting state is null.
+        The computed rate, or 0 if the resulting state is null.
     """
 
     # Select the operation based on the task
@@ -190,7 +190,7 @@ def to_normalize(psi, labels = labels):
 
     else:
         # Collect terms in the expression, grouped by sorted labels
-        collected_terms =  sp.collect(psi, sort(psi, labels), evaluate = False)
+        collected_terms = sp.collect(psi, sort(psi, labels), evaluate = False)
 
         # Extract coefficients of each term
         TermsCoeff = list(collected_terms.items())
