@@ -174,7 +174,7 @@ def replace(psi, t):
     psi = sp.expand(psi.replace(sp.conjugate(sp.sqrt(1 - t**2)), sp.sqrt(1 - t**2)))
     return(psi)
 
-def to_normalaze(psi, labels = labels):
+def to_normalize(psi, labels = labels):
     """
     Normalizes a given quantum expression by computing its normalization coefficient.
 
@@ -219,7 +219,7 @@ def normalize_fun(psi, alpha, g):
     # Normalize each term
     terms = list(collected_terms.values())
     for idx, state in enumerate(terms):
-        normalized_state = sp.expand(to_normalaze(state) * state)
+        normalized_state = sp.expand(to_normalize(state) * state)
         terms[idx] = normalized_state
     
     # Map the normalized terms back to their keys
