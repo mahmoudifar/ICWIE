@@ -189,17 +189,16 @@ def to_normalize(psi, labels = labels):
         return 0
 
     else:
-        # Collect terms in the expression, grouped by sorted labels
+        # Collect terms in the expression, grouped by sorted labels 
         collected_terms = sp.collect(psi, sort(psi, labels), evaluate = False)
 
         # Extract coefficients of each term
-        TermsCoeff = list(collected_terms.items())
-        CoefOfEachTerm = [(TermsCoeff[ii][1])**2 for ii in range(len(TermsCoeff))]
+        coefficients = [coeff**2 for coeff in collected_terms.values()]
 
         # Compute the normalization coefficient
-        NormalCoeff = 1 / sp.sqrt(sum(CoefOfEachTerm))
-
-        return NormalCoeff 
+        normalization_coefficient = 1 / sp.sqrt(sum(coefficients))
+        
+        return normalization_coefficient
 
 def normalize_fun(psi, alpha, g):
     """
