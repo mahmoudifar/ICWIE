@@ -220,14 +220,15 @@ def phase_shifter(psi, p, phi, state='fock'):
         raise ValueError(f"Unsupported state type: '{state}'. Supported types are 'fock' and 'coherent'.")
     
     return psi
-
+    
+# Simulating a tritter (three-port optical device) using two beam splitters
 def tritterA(psi, p1, p2, p3, r1=1/sp.sqrt(3), r2=1/sp.sqrt(2)):
     psi = beamsplitter(beamsplitter(psi, p1, p2, r1), p2, p3, r2)
-    return(psi)
+    return psi
 
 def tritterB(psi, p1, p2, p3, phi_s=sp.pi):
     psi = phase_shifter(tritterA(psi, p1, p2, p3), p2, phi_s)
-    return(psi)
+    return psi
 
 def spdc(psi, p1, s1, i1, state='fock'):
     """
