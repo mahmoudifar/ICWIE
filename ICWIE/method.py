@@ -193,7 +193,7 @@ def to_normalize(psi, labels=labels):
         collected_terms = sp.collect(psi, sort(psi, labels), evaluate=False)
 
         # Extract coefficients of each term
-        coefficients = [coeff**2 for coeff in collected_terms.values()]
+        coefficients = [coeff ** 2 for coeff in collected_terms.values()]
 
         # Compute the normalization coefficient
         normalization_coefficient = 1 / sp.sqrt(sum(coefficients))
