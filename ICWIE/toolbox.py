@@ -2,8 +2,8 @@ import sympy as sp
 
 num_mode = 3 
 zero = sp.Symbol('zero')
-coeff = 1/sp.sqrt(2) 
-path = ['a', 'b', 'c'] + [f'{prefix}{i}' for i in range(1, num_mode + 1) for prefix in ['p', 's', 'i']]
+coeff = 1 / sp.sqrt(2) 
+path = ['a', 'b', 'c'] + [f'{suffix}{i}' for i in range(1, num_mode + 1) for suffix in ['p', 's', 'i']]
 
 for idx, op in enumerate(path): #op: optical path
     globals()[op] = sp.IndexedBase(op)
@@ -47,7 +47,7 @@ def annihilation_fun(psi, a, state='fock'):
     return psi
 
 # Define the photon creation operator
-def creation_fun(psi, a, state='fock', n_cutoff = None):
+def creation_fun(psi, a, state='fock', n_cutoff=None):
     """
     Applies the creation operator to a quantum state.
 
@@ -107,8 +107,8 @@ def coherent_state(psi, a, n_cutoff):
     sympy expression
         The coherent state is a symbolic expression.
     """
-    psi = psi.replace(a[n], sp.exp(-abs(n**2) / 2) *
-                      sp.summation((n**m / sp.sqrt(sp.factorial(m))) * a[m],
+    psi = psi.replace(a[n], sp.exp(-abs(n ** 2) / 2) *
+                      sp.summation((n ** m / sp.sqrt(sp.factorial(m))) * a[m],
                                    (m, 0, n_cutoff)
                                   )
                      )         
@@ -116,9 +116,9 @@ def coherent_state(psi, a, n_cutoff):
     return sp.expand(psi)  # Expand the result for clarity
 
 
-#define a function for each optical device (Beam splitter, SPDC, Phase shifter, Tritter) that are applied in our experimental setup.
+# Define a function for each optical device (beam splitter, spdc, phase shifter, and tritter) applied to our experimental setup.
 
-def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0 = 0):
+def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0=0):
     """
     Simulates the action of a beamsplitter on a quantum state.
 
@@ -143,7 +143,7 @@ def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0 = 0):
     
     global a, b
     # Compute transmission coefficient
-    t = sp.sqrt(1 - r**2)
+    t = sp.sqrt(1 - r ** 2)
     
     # Define the beamsplitter transformations
     trans0 = a * r * sp.exp(-sp.I * (phi_r + phi_0)) + b * t * sp.exp(-sp.I * (phi_t + phi_0))
@@ -157,7 +157,7 @@ def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0 = 0):
         if term != 1:
             # Replace for photon count
             state = term.replace(0, zero)
-            state1 = state.replace(p1[n]*p2[m], p1[n, m])
+            state1 = state.replace(p1[n] * p2[m], p1[n, m])
             num_photon = state1.indices  # Extract photon number information
             N, M = num_photon
             
@@ -166,7 +166,7 @@ def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0 = 0):
             M = 0 if M == zero else M
             
             # Replace with normalized state representation
-            state = state.replace(p1[n]*p2[m], p1[0]*p2[0] / sp.sqrt(sp.factorial(N)*sp.factorial(M)))
+            state = state.replace(p1[n] * p2[m], p1[0] * p2[0] / sp.sqrt(sp.factorial(N) * sp.factorial(M)))
             state = state.replace(zero, 0)
             
             if N == 0 and M == 0:
@@ -221,11 +221,11 @@ def phase_shifter(psi, p, phi, state='fock'):
     
     return psi
 
-def tritterA(psi, p1, p2, p3, r1 = 1/sp.sqrt(3), r2 = 1/sp.sqrt(2)):
+def tritterA(psi, p1, p2, p3, r1=1/sp.sqrt(3), r2=1/sp.sqrt(2)):
     psi = beamsplitter(beamsplitter(psi, p1, p2, r1), p2, p3, r2)
     return(psi)
 
-def tritterB(psi, p1, p2, p3, phi_s = sp.pi):
+def tritterB(psi, p1, p2, p3, phi_s=sp.pi):
     psi = phase_shifter(tritterA(psi, p1, p2, p3), p2, phi_s)
     return(psi)
 
@@ -257,13 +257,13 @@ def spdc(psi, p1, s1, i1, state='fock'):
         if term != 1:
             if state == 'coherent':
                 expr1 = g * annihilation_fun(creation_fun(creation_fun(term, s1), i1), p1, state='coherent')
-                expr2 = (g**2 * annihilation_fun(
+                expr2 = (g ** 2 * annihilation_fun(
                     annihilation_fun(creation_fun(creation_fun(creation_fun(creation_fun(term, s1), s1), i1), i1), p1, state='coherent'),
                     p1, state='coherent')) / 2
                 output_state = term + expr1 + expr2
             elif state == 'fock':
                 expr1 = g * annihilation_fun(creation_fun(creation_fun(term, s1), i1), p1)
-                expr2 = (g**2 * annihilation_fun(
+                expr2 = (g ** 2 * annihilation_fun(
                     annihilation_fun(creation_fun(creation_fun(creation_fun(creation_fun(term, s1), s1), i1), i1), p1),
                     p1)) / 2
                 output_state = term + expr1 + expr2
