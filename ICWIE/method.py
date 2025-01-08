@@ -16,8 +16,8 @@ def count_fun(psi, p):
     Returns:
         The quantum state after applying the photon counting operation.
     """
-    photon_state = creation_fun(annihilation_fun(psi, p), p)
-    return photon_state
+    count_state = creation_fun(annihilation_fun(psi, p), p)
+    return count_state
 
 
 def coincidence_fun(psi, p1, p2):
@@ -86,7 +86,7 @@ def encoded_label(nums, labels):
 def sort(psi, labels):
     """
     Sorts terms in the quantum state `psi` by mapping indexed symbols to corresponding labels (sp.Wild)
-    (e.g. a[0]*b[2] -> a[l1]*b[l2])
+    (e.g. a[0] * b[2] -> a[l1] * b[l2])
     
     Parameters:
         psi: A symbolic quantum state (SymPy expression).
@@ -118,7 +118,7 @@ def sort(psi, labels):
     return sorted_result
 
 
-def rate_fun(psi, p1, p2, task, labels = labels):
+def rate_fun(psi, p1, p2, task, labels=labels):
     """
     Computes the rate of a quantum operation (coincidence, photon counting, or joint probability).
 
@@ -171,10 +171,10 @@ def visibility(r_min, r_max):
     return vis
 
 def replace(psi, t):
-    psi = sp.expand(psi.replace(sp.conjugate(sp.sqrt(1 - t**2)), sp.sqrt(1 - t**2)))
+    psi = sp.expand(psi.replace(sp.conjugate(sp.sqrt(1 - t ** 2)), sp.sqrt(1 - t ** 2)))
     return(psi)
 
-def to_normalize(psi, labels = labels):
+def to_normalize(psi, labels=labels):
     """
     Normalizes a given quantum expression by computing its normalization coefficient.
 
@@ -190,7 +190,7 @@ def to_normalize(psi, labels = labels):
 
     else:
         # Collect terms in the expression, grouped by sorted labels 
-        collected_terms = sp.collect(psi, sort(psi, labels), evaluate = False)
+        collected_terms = sp.collect(psi, sort(psi, labels), evaluate=False)
 
         # Extract coefficients of each term
         coefficients = [coeff**2 for coeff in collected_terms.values()]
