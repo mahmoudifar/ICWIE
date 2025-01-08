@@ -3,7 +3,7 @@ import sympy as sp
 num_mode = 3 
 zero = sp.Symbol('zero')
 coeff = 1 / sp.sqrt(2) 
-path = ['a', 'b', 'c'] + [f'{suffix}{i}' for i in range(1, num_mode + 1) for suffix in ['p', 's', 'i']]
+path = ['a', 'b', 'c'] + [f'{prefix}{i}' for i in range(1, num_mode + 1) for prefix in ['p', 's', 'i']]
 
 for idx, op in enumerate(path): #op: optical path
     globals()[op] = sp.IndexedBase(op)
