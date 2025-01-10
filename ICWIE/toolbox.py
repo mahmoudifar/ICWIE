@@ -146,8 +146,8 @@ def beamsplitter(psi, p1, p2, r=1/sp.sqrt(2), phi_r=0, phi_t=0, phi_0=0):
     t = sp.sqrt(1 - r ** 2)
     
     # Define the beamsplitter transformations
-    trans0 = a * r * sp.exp(-sp.I * (phi_r + phi_0)) + b * t * sp.exp(-sp.I * (phi_t + phi_0))
-    trans1 = a * t * sp.exp(sp.I * (phi_t + phi_0)) - b * r * sp.exp(sp.I * (phi_r + phi_0))
+    trans0 = a * r * sp.exp(sp.I * (-phi_r + phi_0)) + b * t * sp.exp(sp.I * (phi_t + phi_0))
+    trans1 = a * t * sp.exp(sp.I * (-phi_t + phi_0)) - b * r * sp.exp(sp.I * (phi_r + phi_0))
 
     # Decompose the input expression into a dual-rail representation
     dictated = sp.collect(psi, [p1[n] * p2[m]], evaluate=False)
